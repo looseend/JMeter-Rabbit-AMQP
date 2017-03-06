@@ -51,6 +51,7 @@ public abstract class AMQPSampler extends AbstractSampler implements ThreadListe
     private static final String TIMEOUT = "AMQPSampler.Timeout";
     private static final String ITERATIONS = "AMQPSampler.Iterations";
     private static final String MESSAGE_TTL = "AMQPSampler.MessageTTL";
+    private static final String MESSAGE_MAX_PRIORITY = "AMQPSampler.MessageMaxPriority";
     private static final String MESSAGE_EXPIRES = "AMQPSampler.MessageExpires";
     private static final String QUEUE_DURABLE = "AMQPSampler.QueueDurable";
     private static final String QUEUE_REDECLARE = "AMQPSampler.Redeclare";
@@ -122,6 +123,9 @@ public abstract class AMQPSampler extends AbstractSampler implements ThreadListe
         if(getMessageExpires() != null && !getMessageExpires().isEmpty())
             arguments.put("x-expires", getMessageExpiresAsInt());
 
+        if(getMessageMaxPriority() != null && !getMessageMaxPriority().isEmpty())
+            arguments.put("x-max-priority", getMessageMaxPriorityAsInt());
+        
         return arguments;
     }
 
@@ -240,6 +244,14 @@ public abstract class AMQPSampler extends AbstractSampler implements ThreadListe
         setProperty(MESSAGE_TTL, name);
     }
 
+    public String getMessageMaxPriority() {
+        return getPropertyAsString(MESSAGE_MAX_PRIORITY);
+    }
+
+    public void setMessageMaxPriority(String name) {
+        setProperty(MESSAGE_MAX_PRIORITY, name);
+    }
+
     protected Integer getMessageTTLAsInt() {
         if (getPropertyAsInt(MESSAGE_TTL) < 1) {
             return null;
@@ -247,6 +259,13 @@ public abstract class AMQPSampler extends AbstractSampler implements ThreadListe
         return getPropertyAsInt(MESSAGE_TTL);
     }
 
+    protected Integer getMessageMaxPriorityAsInt() {
+        if(getPropertyAsInt(MESSAGE_MAX_PRIORITY) < 1) {
+            return null;
+        }
+        return getPropertyAsInt(MESSAGE_MAX_PRIORITY);
+    }
+       
 
     public String getMessageExpires() {
         return getPropertyAsString(MESSAGE_EXPIRES);

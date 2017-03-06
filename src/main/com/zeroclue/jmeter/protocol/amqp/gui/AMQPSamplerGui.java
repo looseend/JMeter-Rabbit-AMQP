@@ -24,6 +24,7 @@ public abstract class AMQPSamplerGui extends AbstractSamplerGui {
     protected JLabeledTextField routingKey = new JLabeledTextField("Routing Key");
     protected JLabeledTextField virtualHost = new JLabeledTextField("Virtual Host");
     protected JLabeledTextField messageTTL = new JLabeledTextField("Message TTL");
+    protected JLabeledTextField messageMaxPriority = new JLabeledTextField("Max Priority", 5);
     protected JLabeledTextField messageExpires = new JLabeledTextField("Expires");
     protected JLabeledChoice exchangeType = new JLabeledChoice("Exchange Type", new String[]{ "direct", "topic", "headers", "fanout"});
     private final JCheckBox exchangeDurable = new JCheckBox("Durable?", AMQPSampler.DEFAULT_EXCHANGE_DURABLE);
@@ -64,6 +65,7 @@ public abstract class AMQPSamplerGui extends AbstractSamplerGui {
         routingKey.setText(sampler.getRoutingKey());
         virtualHost.setText(sampler.getVirtualHost());
         messageTTL.setText(sampler.getMessageTTL());
+        messageMaxPriority.setText(sampler.getMessageMaxPriority());
         messageExpires.setText(sampler.getMessageExpires());
         queueDurable.setSelected(sampler.queueDurable());
         queueExclusive.setSelected(sampler.queueExclusive());
@@ -94,6 +96,7 @@ public abstract class AMQPSamplerGui extends AbstractSamplerGui {
         routingKey.setText("jmeterRoutingKey");
         virtualHost.setText("/");
         messageTTL.setText("");
+        messageMaxPriority.setText("5");
         messageExpires.setText("");
         exchangeType.setText("direct");
         queueDurable.setSelected(true);
@@ -129,6 +132,7 @@ public abstract class AMQPSamplerGui extends AbstractSamplerGui {
         sampler.setRoutingKey(routingKey.getText());
         sampler.setVirtualHost(virtualHost.getText());
         sampler.setMessageTTL(messageTTL.getText());
+        sampler.setMessageMaxPriority(messageMaxPriority.getText());
         sampler.setMessageExpires(messageExpires.getText());
         sampler.setExchangeType(exchangeType.getText());
         sampler.setQueueDurable(queueDurable.isSelected());
@@ -220,6 +224,10 @@ public abstract class AMQPSamplerGui extends AbstractSamplerGui {
 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
+        queueSettings.add(messageMaxPriority, gridBagConstraints);
+
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
         queueSettings.add(messageExpires, gridBagConstraints);
 
         gridBagConstraints.gridx = 1;
