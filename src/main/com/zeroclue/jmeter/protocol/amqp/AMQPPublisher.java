@@ -90,7 +90,7 @@ public class AMQPPublisher extends AMQPSampler implements Interruptible {
             for (int idx = 0; idx < loop; idx++) {
                 // try to force jms semantics.
                 // but this does not work since RabbitMQ does not sync to disk if consumers are connected as
-                // seen by iostat -cd 1. TPS value remains at 0.ZA
+                // seen by iostat -cd 1. TPS value remains at 0.
                 channel.basicPublish(getExchange(), getMessageRoutingKey(), messageProperties, messageBytes);
 
             }
